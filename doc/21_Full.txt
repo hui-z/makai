@@ -1,0 +1,25 @@
+GET https://app.makaiwars-sp.jp/asg/shopj/recovery HTTP/1.1
+X-OS-TYPE: 2
+X-TOKEN: 80cbeb66c4002125-b807fc71-4ad834fa-80ce1eab-d4976b1f1403a6c07ce37880
+X-Unity-Version: 5.6.5f1
+X-GAME-VERSION: 00.00.00
+Accept-Encoding: gzip
+X-MST-VERSION: 20180330000000
+X-APP-VERSION: 01.03.02
+X-RES-VERSION: 01.03.03
+User-Agent: Dalvik/1.6.0 (Linux; U; Android 4.4.4; MuMu Build/V417IR)
+Host: app.makaiwars-sp.jp
+Connection: Keep-Alive
+
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Wed, 04 Apr 2018 17:07:15 GMT
+Content-Type: application/json; charset=utf8
+Content-Length: 1046
+Connection: keep-alive
+X-Powered-By: PHP/7.1.14
+X-Token: 80cbeb66c4002125-b807fc71-4ad834fa-80ce1eab-d4976b1f1403a6c07ce37880
+X-Uuid: 8ef52174-3943-4998-9119-a8c9c8f6c03a
+
+{"status_cd":0,"error_cd":0,"data":{"replace":[{"t_member_id":"783098","t_members":{"id":"783098","os_type":"2","name":"ring","lv":"101","exp":"114689","exp_sum":"6660752","act_max_date":"2018-04-05 02:07:15","act_max":"100","act_overflow":29,"friend_now":"0","friend_max":"20","friend_num":"0","friend_num_followed":"0","card_num":"64","eq_max":"500","eq_num":"137","m_quest_stage_id":"10110111","t_member_card_id":"1432502","m_card_id":"5014014","t_member_card_lv":"124","deck_no":"1","bp_max":"5","bp_max_date":"2018-02-21 00:50:54","last_login_date":"0000-00-00 00:00:00","last_login_present_date":"0000-00-00","continue_login_count":"0","login_sheet":"1","login_days":"0","info_conf_date":"2018-02-21 00:50:54","mission_beginner_clear_flg":"0","identity":"","denied_at":null,"info_date":"2018-02-21 00:50:54","admin_flg":"0","created":"2018-02-21 00:50:54","modified":"2018-04-05 02:02:27"},"t_member_items":[{"item_id":"1301","item_num":140,"item_type":"13"},{"item_id":"1401","item_num":1110,"item_type":"14"}]}]},"timestamp":"1522861635"}

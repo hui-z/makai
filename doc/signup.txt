@@ -1,0 +1,21 @@
+POST https://app.makaiwars-sp.jp/asg/api/signup HTTP/1.1
+X-Unity-Version: 5.6.5f1
+X-PASSWORD: rT96EBOBZ6dPFc0RH2gt5FxB55AIpSz8VPQsDQsAMNZyzHAKBGQLikEk4Y28CyJO
+Content-Type: application/x-www-form-urlencoded
+X-UUID: b03205f7-63d8-4dd2-b22b-35238a965470
+User-Agent: Dalvik/1.6.0 (Linux; U; Android 4.4.4; MuMu Build/V417IR)
+Host: app.makaiwars-sp.jp
+Connection: Keep-Alive
+Accept-Encoding: gzip
+Content-Length: 12
+
+form=nothing
+HTTP/1.1 200 OK
+Server: nginx
+Date: Thu, 05 Apr 2018 03:46:46 GMT
+Content-Type: text/plain; charset=utf-8
+Content-Length: 0
+Connection: keep-alive
+X-Password: rT96EBOBZ6dPFc0RH2gt5FxB55AIpSz8VPQsDQsAMNZyzHAKBGQLikEk4Y28CyJO
+X-Uuid: b03205f7-63d8-4dd2-b22b-35238a965470
+
