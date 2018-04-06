@@ -49,26 +49,26 @@ namespace HuiZ.Makai.Interceptors
             var path = uri.LocalPath;
             var contentType = e.WebSession.Response.ContentType;
             if (contentType.Contains("json"))
-                return ProcessJsonResponse(path, e);
+                return ProcessJsonResponse(GetContext(e), e);
             return Nothing();
         });
 
-        private IObservable<Unit> ProcessJsonResponse(string path, SessionEventArgs e)
+        private IObservable<Unit> ProcessJsonResponse(Context ctx, SessionEventArgs e)
         {
-            if (_modifiers.Where(m => m.CanModify(path)).IsEmpty())
+            if (_modifiers.Where(m => m.CanModify(ctx)).IsEmpty())
                 return Nothing();
             var body = e.GetResponseBody().ToObservable();
             var payload = Deserialize<dynamic>(body);
-            var modified = payload.Select(p => ProcessModify(path, p))
+            var modified = payload.Select(p => ProcessModify(ctx, p))
                 .Select(Serialize)
                 .Do(e.SetResponseBody);
             return Return(modified);
         }
 
-        private object ProcessModify(string path, object json) 
+        private object ProcessModify(Context ctx, object json) 
             => _modifiers 
-            .Where(m => m.CanModify(path))
-            .Aggregate(json, (acc, m) => m.Process(acc));
+            .Where(m => m.CanModify(ctx))
+            .Aggregate(json, (acc, m) => m.Process(ctx, acc));
 
         private IObservable<T> Deserialize<T>(IObservable<byte[]> source)
         {
@@ -85,5 +85,14 @@ namespace HuiZ.Makai.Interceptors
         private IObservable<Unit> Nothing() => Observable.Return(Unit.Default);
 
         private string GetUrl(SessionEventArgs e) => e.WebSession.Request.Url;
+        private Context GetContext(SessionEventArgs e)
+        {
+            return new Context
+            {
+                Url = e.WebSession.Request.Url,
+                Token = e.WebSession.Request.Headers.GetFirstHeader("X-TOKEN").Value,
+                Path = new Uri(e.WebSession.Request.Url).LocalPath,
+            };
+        }
     }
 }

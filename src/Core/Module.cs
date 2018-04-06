@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LazyCache;
 using Ninject.Extensions.Conventions;
 using Ninject.Modules;
 
@@ -23,6 +24,7 @@ namespace HuiZ.Makai
                 .InSingletonScope()
                 .WithConstructorArgument("port", 9999);
 
+            Bind<IAppCache>().To<CachingService>();
             Bind<IRequester>().To<Requester>();
             Bind<IRequesterFactory>().To<RequesterFactory>().InSingletonScope();
         }

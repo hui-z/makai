@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
+using LazyCache;
 using Newtonsoft.Json;
 using Ninject;
 using Ninject.Parameters;
@@ -63,13 +64,20 @@ namespace HuiZ.Makai
     public class RequesterFactory : IRequesterFactory
     {
         private readonly IResolutionRoot _root;
+        private readonly IAppCache _cache;
 
-        public RequesterFactory(IResolutionRoot root)
+        public RequesterFactory(IResolutionRoot root, IAppCache cache)
         {
             _root = root;
+            _cache = cache;
         }
 
         public IRequester Get(string token)
+        {
+            return _cache.GetOrAdd(token, () => Create(token));
+        }
+
+        private IRequester Create(string token)
         {
             return _root.Get<IRequester>(new ConstructorArgument(nameof(token), token));
         }

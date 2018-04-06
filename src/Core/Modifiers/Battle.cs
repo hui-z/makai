@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Titanium.Web.Proxy.EventArguments;
 
 namespace HuiZ.Makai.Modifiers
 {
     public class Battle : IModifier
     {
-        public bool CanModify(string path) => path == "/asg/battlej/ready";
+        private readonly IRequesterFactory _requesters;
 
-        public dynamic Process(dynamic json)
+        public Battle(IRequesterFactory requesters)
+        {
+            _requesters = requesters;
+        }
+
+        public bool CanModify(Context ctx) => ctx.Path == "/asg/battlej/ready";
+
+        public dynamic Process(Context ctx, dynamic json)
         {
             var waves = json.data.replace[0].battle.waves;
             foreach(dynamic wave in waves)
