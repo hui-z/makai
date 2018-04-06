@@ -22,6 +22,9 @@ namespace HuiZ.Makai
             Bind<Proxy.IServer>().To<Proxy.Server>()
                 .InSingletonScope()
                 .WithConstructorArgument("port", 9999);
+
+            Bind<IRequester>().To<Requester>();
+            Bind<IRequesterFactory>().To<RequesterFactory>().InSingletonScope();
         }
     }
 }

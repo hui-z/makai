@@ -59,6 +59,9 @@
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.4.5.1\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=106.2.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RestSharp.106.2.1\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="StreamExtended, Version=1.0.141.0, Culture=neutral, PublicKeyToken=bbfa0f1d54f50043, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StreamExtended.1.0.141-beta\lib\net45\StreamExtended.dll</HintPath>
     </Reference>
@@ -90,6 +93,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -112,6 +116,7 @@
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy\Server.cs" />
+    <Compile Include="Requester.cs" />
     <Compile Include="Rpc\Protocol.cs" />
     <Compile Include="Rpc\Worker.cs" />
     <Compile Include="Rpc\Server.cs" />
