@@ -30,7 +30,7 @@ namespace HuiZ.Makai.Proxy
 
             _producer = Observable.Create<Unit>(o =>
             {
-                _proxy.ExceptionFunc = ex => Console.WriteLine(ex.Message);
+                //_proxy.ExceptionFunc = ex => Console.WriteLine(ex.Message);
                 _proxy.BeforeRequest += (s, e) => interceptor.ProcessRequest(e).ToTask();
                 _proxy.BeforeResponse += (s, e) => interceptor.ProcessResponse(e).ToTask();
                 _proxy.ServerCertificateValidationCallback += OnCertificateValidsation;
@@ -40,7 +40,7 @@ namespace HuiZ.Makai.Proxy
                 _proxy.AddEndPoint(endPoint);
                 
                 _proxy.Start();
-                _proxy.ProxyEndPoints.ForEach(ep => Console.WriteLine($"listening on {ep.IpAddress}: {ep.Port}"));
+                _proxy.ProxyEndPoints.ForEach(ep => Console.WriteLine($"listening on {ep.IpAddress}:{ep.Port}"));
                 return new CompositeDisposable(
                     Disposable.Create(() => _proxy.Stop())
                 );

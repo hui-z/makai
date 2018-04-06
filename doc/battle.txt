@@ -1,0 +1,3 @@
+/asg/battlej/ready payload={"stage_id":"404","category":"2","deck_no":"1","t_member_formation_id":"163396"}
+/asg/battlej/start payload={"battle_id":"6379911"}
+/asg/battlej/result payload={"battle_id":6379911,"result":1,"move_count":11,"dead_count":0,"kills":[4040101,4040102,4040103,4040203,4040201,4040202,4040204,4040304,4040305,4040301,4040302,4040303]}

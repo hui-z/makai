@@ -13,14 +13,31 @@ namespace HuiZ.Makai.Interceptors
 {
     public class Default : IInterceptor
     {
+        private readonly IEnumerable<IModifier> _modifiers;
+
+        public Default(IEnumerable<IModifier> modifiers)
+        {
+            _modifiers = modifiers;
+        }
 
         public IObservable<Unit> ProcessRequest(SessionEventArgs e) => Observable.Defer(() =>
         {
             var url = GetUrl(e);
             if (!url.Contains("app.makaiwars-sp.jp"))
-                return Observable.Return(Unit.Default);
-            //Console.WriteLine(url);
-            return Observable.Return(Unit.Default);
+                return Nothing();
+            var uri = new Uri(url);
+            var path = uri.LocalPath;
+            var query = uri.Query;
+            if(e.WebSession.Request.ContentLength > 0)
+            {
+                var print = e.GetRequestBody().ToObservable()
+                    .Select(Encoding.UTF8.GetString)
+                    .Select(Uri.UnescapeDataString)
+                    .Do(payload => Console.WriteLine($"[{path}]{query} {payload}"));
+                return Return(print);
+            }
+            Console.WriteLine($"[{path}]{query}");
+            return Nothing();
         });
 
         public IObservable<Unit> ProcessResponse(SessionEventArgs e) => Observable.Defer(() =>
@@ -30,7 +47,6 @@ namespace HuiZ.Makai.Interceptors
                 return Nothing();
             var uri = new Uri(url);
             var path = uri.LocalPath;
-            Console.WriteLine(path);
             var contentType = e.WebSession.Response.ContentType;
             if (contentType.Contains("json"))
                 return ProcessJsonResponse(path, e);
@@ -39,33 +55,20 @@ namespace HuiZ.Makai.Interceptors
 
         private IObservable<Unit> ProcessJsonResponse(string path, SessionEventArgs e)
         {
-            Console.WriteLine(path);
-            if(path == "/asg/battlej/ready")
-            {
-                var body = e.GetResponseBody().ToObservable();
-                var payload = Deserialize<dynamic>(body);
-                var modified = payload.Select(ModifyBattleReady)
-                    .Select(Serialize)
-                    .Do(e.SetResponseBody);
-                return Return(modified);
-            }
-            return Nothing();
+            if (_modifiers.Where(m => m.CanModify(path)).IsEmpty())
+                return Nothing();
+            var body = e.GetResponseBody().ToObservable();
+            var payload = Deserialize<dynamic>(body);
+            var modified = payload.Select(p => ProcessModify(path, p))
+                .Select(Serialize)
+                .Do(e.SetResponseBody);
+            return Return(modified);
         }
 
-        private dynamic ModifyBattleReady(dynamic json)
-        {
-            var waves = json.data.replace[0].battle.waves;
-            foreach(dynamic wave in waves)
-            {
-                foreach(dynamic monster in wave.monsters)
-                {
-                    monster.atk = 1;
-                    monster.hp = 1;
-                    monster.spd = 1;
-                }
-            }
-            return json;
-        }
+        private object ProcessModify(string path, object json) 
+            => _modifiers 
+            .Where(m => m.CanModify(path))
+            .Aggregate(json, (acc, m) => m.Process(acc));
 
         private IObservable<T> Deserialize<T>(IObservable<byte[]> source)
         {

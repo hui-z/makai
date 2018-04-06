@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HuiZ.Makai.Modifiers
+{
+    public class Battle : IModifier
+    {
+        public bool CanModify(string path) => path == "/asg/battlej/ready";
+
+        public dynamic Process(dynamic json)
+        {
+            var waves = json.data.replace[0].battle.waves;
+            foreach(dynamic wave in waves)
+            {
+                foreach(dynamic monster in wave.monsters)
+                {
+                    monster.atk = 1;
+                    monster.def = 1;
+                    monster.hp = 1;
+                    monster.spd = 1;
+                }
+            }
+            Console.WriteLine($"[battle ready]: response modified");
+            return json;
+        }
+    }
+}
