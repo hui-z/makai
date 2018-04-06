@@ -4,11 +4,13 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using Titanium.Web.Proxy.EventArguments;
 
 namespace HuiZ.Makai
 {
     public interface IInterceptor
     {
-        IObservable<Unit> Process(object obj);
+        IObservable<Unit> ProcessRequest(SessionEventArgs e);
+        IObservable<Unit> ProcessResponse(SessionEventArgs e);
     }
 }

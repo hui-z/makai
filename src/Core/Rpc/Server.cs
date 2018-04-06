@@ -23,12 +23,13 @@ namespace HuiZ.Makai.Rpc
         private readonly EventLoopScheduler _scheduler = new EventLoopScheduler();
         private readonly ISubject<NetMQMessage> _messages = new Subject<NetMQMessage>();
         private NetMQFrame _worker;
+        private IDisposable _disposal;
 
         public Server()
         {
-            Observable.Create<Unit>(o =>
+            _disposal = Observable.Create<Unit>(o =>
             {
-                var liveness = 0;
+                var liveness = 3;
                 return _scheduler.Schedule(self =>
                 {
                     NetMQMessage msg = null;
@@ -41,7 +42,7 @@ namespace HuiZ.Makai.Rpc
                         _worker = null;
                     self();
                 });
-            });
+            }).Subscribe();
         }
 
         public void Dispose()

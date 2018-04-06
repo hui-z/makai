@@ -31,8 +31,8 @@ namespace HuiZ.Makai.Proxy
             _producer = Observable.Create<Unit>(o =>
             {
                 _proxy.ExceptionFunc = ex => Console.WriteLine(ex.Message);
-                _proxy.BeforeRequest += (s, e) => interceptor.Process(e).ToTask();
-                _proxy.BeforeResponse += (s, e) => interceptor.Process(e).ToTask();
+                _proxy.BeforeRequest += (s, e) => interceptor.ProcessRequest(e).ToTask();
+                _proxy.BeforeResponse += (s, e) => interceptor.ProcessResponse(e).ToTask();
                 _proxy.ServerCertificateValidationCallback += OnCertificateValidsation;
                 _proxy.ClientCertificateSelectionCallback += OnClientCertificateSelectionCallback;
 
