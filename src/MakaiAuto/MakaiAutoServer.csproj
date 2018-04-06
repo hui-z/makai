@@ -7,7 +7,7 @@
     <ProjectGuid>{9B9B0FE6-BF7F-4697-BA36-149CAD36EB2B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>HuiZ.Makai</RootNamespace>
-    <AssemblyName>MakaiAuto</AssemblyName>
+    <AssemblyName>Server</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -26,7 +26,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\release\1.0.1\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

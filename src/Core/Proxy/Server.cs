@@ -40,7 +40,7 @@ namespace HuiZ.Makai.Proxy
                 _proxy.AddEndPoint(endPoint);
                 
                 _proxy.Start();
-                _proxy.ProxyEndPoints.ForEach(ep => Console.WriteLine($"listening on {ep.IpAddress}:{ep.Port}"));
+                _proxy.ProxyEndPoints.ForEach(ep => Console.WriteLine($"makai hack server listening on {ep.IpAddress}:{ep.Port}"));
                 return new CompositeDisposable(
                     Disposable.Create(() => _proxy.Stop())
                 );

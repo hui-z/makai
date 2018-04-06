@@ -32,7 +32,17 @@ namespace HuiZ.Makai.Modifiers
                 }
             }
             Console.WriteLine($"[battle ready]: response modified");
+            RecoveryAp(ctx);
             return json;
+        }
+
+        private void RecoveryAp(Context ctx)
+        {
+            var requester = _requesters.Get(ctx.Token);
+            requester.Recovery().Subscribe(
+                result => Console.WriteLine($"[recovery ap] {result}"),
+                ex => Console.WriteLine($"[recovery ap] {ex.Message}")
+            );
         }
     }
 }
