@@ -24,15 +24,15 @@ namespace HuiZ.Makai.Proxy
         private readonly ProxyServer _proxy = new ProxyServer();
         private readonly IObservable<Unit> _producer;
 
-        public Server(int port)
+        public Server(int port, IInterceptor interceptor)
         {
             _proxy.CertificateManager.SaveFakeCertificates = true;
 
             _producer = Observable.Create<Unit>(o =>
             {
                 _proxy.ExceptionFunc = ex => Console.WriteLine(ex.Message);
-                _proxy.BeforeRequest += OnRequest;
-                _proxy.BeforeResponse += OnResponse;
+                _proxy.BeforeRequest += (s, e) => interceptor.Process(e).ToTask();
+                _proxy.BeforeResponse += (s, e) => interceptor.Process(e).ToTask();
                 _proxy.ServerCertificateValidationCallback += OnCertificateValidsation;
                 _proxy.ClientCertificateSelectionCallback += OnClientCertificateSelectionCallback;
 
@@ -58,16 +58,6 @@ namespace HuiZ.Makai.Proxy
             if (e.SslPolicyErrors == SslPolicyErrors.None)
                 e.IsValid = true;
             return Task.FromResult(0);
-        }
-
-        private async Task OnResponse(object sender, SessionEventArgs e)
-        {
-            Console.WriteLine(e.WebSession.Request.Url);
-        }
-
-        private async Task OnRequest(object sender, SessionEventArgs e)
-        {
-            Console.WriteLine(e.WebSession.Request.Url);
         }
 
         public IDisposable Subscribe(IObserver<Unit> observer) 

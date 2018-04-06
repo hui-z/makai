@@ -11,6 +11,7 @@ namespace HuiZ.Makai
     {
         public override void Load()
         {
+            Bind<IInterceptor>().To<Interceptors.Default>().InSingletonScope();
             Bind<Proxy.IServer>().To<Proxy.Server>()
                 .InSingletonScope()
                 .WithConstructorArgument("port", 9999);
