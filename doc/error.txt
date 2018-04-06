@@ -1,0 +1,27 @@
+POST https://app.makaiwars-sp.jp/asg/eqj/sell HTTP/1.1
+X-Unity-Version: 5.6.5f1
+X-MST-VERSION: 20180406000000
+Content-Type: application/x-www-form-urlencoded
+X-APP-VERSION: 01.03.02
+X-GAME-VERSION: 00.00.00
+X-TOKEN: d5e45c066cd8ca5b-7353ee23-4f5b2926-977bc6cf-b2d2bdbcbc41269e7ec73191
+X-OS-TYPE: 2
+X-RES-VERSION: 01.03.04
+Accept-Encoding: gzip,deflate
+User-Agent: Dalvik/2.1.0 (Linux; U; Android 6.0.1; MIX MIUI/V8.5.3.0.MAHCNED)
+Host: app.makaiwars-sp.jp
+Connection: Keep-Alive
+Content-Length: 56
+
+payload=%7B%22t_member_eq_id%22%3A%5B%228028328%22%5D%7D
+HTTP/1.1 500 Internal Server Error
+Server: nginx
+Date: Fri, 06 Apr 2018 20:07:54 GMT
+Content-Type: application/json; charset=utf8
+Content-Length: 197
+Connection: keep-alive
+X-Powered-By: PHP/7.1.14
+X-Token: d5e45c066cd8ca5b-7353ee23-4f5b2926-977bc6cf-b2d2bdbcbc41269e7ec73191
+X-Uuid: cc83a754-619d-44b2-86d7-faa73c541de5
+
+{"status_cd":0,"error_cd":0,"data":{"error":{"message":"予期せぬエラーを検出しました。タイトル画面へ戻ります。","system":"Undefined offset: 0"}},"timestamp":"1523045274"}

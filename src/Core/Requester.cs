@@ -17,11 +17,11 @@ namespace HuiZ.Makai
     public interface IRequester
     {
         IObservable<string> Recovery();
+        IObservable<string> SellEquips(params long[] ids);
     }
-    public class User { }
     public class Requester : IRequester
     {
-        private RestClient _rest = new RestClient("https://app.makaiwars-sp.jp");
+        private readonly RestClient _rest = new RestClient("https://app.makaiwars-sp.jp");
         private readonly string _token;
 
         public Requester(string token)
@@ -36,7 +36,20 @@ namespace HuiZ.Makai
             request.AddHeader("X-OS-TYPE", "2");
             return Call<dynamic>(request).Select(r => $"error_cd: {r.error_cd}");
         }
-        
+
+        public IObservable<string> SellEquips(params long[] ids)
+        {
+            var request = new RestRequest("asg/eqj/sell", Method.POST);
+            request.AddHeader("X-TOKEN", _token);
+            request.AddHeader("X-OS-TYPE", "2");
+            var payload = new
+            {
+                t_member_eq_id = ids.Select(id => id.ToString()).ToList()
+            };
+            request.AddParameter("payload", JsonConvert.SerializeObject(payload));
+            return Call<dynamic>(request).Select(r => $"{r.error_cd}");
+        }
+
         private IObservable<T> Call<T>(RestRequest req)
             where T : new()
         {

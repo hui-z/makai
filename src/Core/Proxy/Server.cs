@@ -24,9 +24,18 @@ namespace HuiZ.Makai.Proxy
         private readonly ProxyServer _proxy = new ProxyServer();
         private readonly IObservable<Unit> _producer;
 
-        public Server(int port, IInterceptor interceptor)
+        public Server(int port, bool fiddler, IInterceptor interceptor)
         {
             _proxy.CertificateManager.SaveFakeCertificates = true;
+            if (fiddler)
+            {
+                _proxy.UpStreamHttpsProxy = new ExternalProxy
+                {
+                    HostName = "127.0.0.1",
+                    Port = 8888,
+                    BypassLocalhost = true,
+                };
+            }
 
             _producer = Observable.Create<Unit>(o =>
             {

@@ -22,7 +22,11 @@ namespace HuiZ.Makai
                 .Configure(b => b.InSingletonScope()));
             Bind<Proxy.IServer>().To<Proxy.Server>()
                 .InSingletonScope()
+#if DEBUG
+                .WithConstructorArgument("port", 9998);
+#else
                 .WithConstructorArgument("port", 9999);
+                #endif
 
             Bind<IAppCache>().To<CachingService>();
             Bind<IRequester>().To<Requester>();

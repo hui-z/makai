@@ -7,11 +7,11 @@ using Titanium.Web.Proxy.EventArguments;
 
 namespace HuiZ.Makai.Modifiers
 {
-    public class Battle : IModifier
+    public class BattleReady : IModifier
     {
         private readonly IRequesterFactory _requesters;
 
-        public Battle(IRequesterFactory requesters)
+        public BattleReady(IRequesterFactory requesters)
         {
             _requesters = requesters;
         }
