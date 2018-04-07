@@ -41,9 +41,11 @@ namespace HuiZ.Makai.Modifiers
                 int level = card.lv;
                 int lvMax = card.lv_max;
                 int rare = card.rare;
+                int expEvo = card.exp_evo;
+                int expEvoMax = 125 * Convert.ToInt32(Math.Pow(2, rare - 1));
                 var display = _db.Cards[cardId];
                 _logger.Trace($"[{display}]: lv {level}");
-                if(level == lvMax && rare <= 5)
+                if(level == lvMax && rare <= 5 && expEvo >= expEvoMax)
                 {
                     _rest.EnhanceCard(ctx, id).SubscribeWithLog(_logger, "enhance card");
                     if(rare == 5)
