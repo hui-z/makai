@@ -46,7 +46,8 @@ namespace HuiZ.Makai.Proxy
                 _proxy.BeforeRequest += (s, e) => interceptor.ProcessRequest(e).ToTask();
                 _proxy.BeforeResponse += (s, e) => interceptor.ProcessResponse(e).ToTask();
                 _proxy.ServerCertificateValidationCallback += OnCertificateValidsation;
-                _proxy.ClientCertificateSelectionCallback += OnClientCertificateSelectionCallback;
+                _proxy.ClientCertificateSelectionCallback += OnClientCertificateSelection;
+                _proxy.AuthenticateUserFunc += Authenticate;
 
                 var endPoint = new ExplicitProxyEndPoint(IPAddress.Any, port, true);
                 _proxy.AddEndPoint(endPoint);
@@ -59,8 +60,18 @@ namespace HuiZ.Makai.Proxy
             });
 
         }
+        private Task<bool> Authenticate(string user, string pass) => Observable.Return(Auth(user, pass)).ToTask();
 
-        private Task OnClientCertificateSelectionCallback(object arg1, CertificateSelectionEventArgs arg2)
+        private bool Auth(string user, string pass)
+        {
+            if (user == "hulucc" && pass == "makai")
+                return true;
+            if (user == "makai" && pass == "makai")
+                return true;
+            return false;
+        }
+
+        private Task OnClientCertificateSelection(object arg1, CertificateSelectionEventArgs arg2)
         {
             return Task.FromResult(0);
         }
