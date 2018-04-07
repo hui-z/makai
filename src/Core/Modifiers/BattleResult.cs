@@ -13,11 +13,13 @@ namespace HuiZ.Makai.Modifiers
     public class BattleResult : IModifier
     {
         private readonly IRequester _rest;
+        private readonly Database _db;
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        public BattleResult(IRequester rest)
+        public BattleResult(IRequester rest, Database db)
         {
             _rest = rest;
+            _db = db;
         }
 
         public bool CanModify(Context ctx) => ctx.Path == "/asg/battlej/result";
@@ -35,11 +37,18 @@ namespace HuiZ.Makai.Modifiers
             foreach(var card in cards)
             {
                 long id = card.id;
+                long cardId = card.m_card_id;
                 int level = card.lv;
                 int lvMax = card.lv_max;
                 int rare = card.rare;
+                var display = _db.Cards[cardId];
+                _logger.Trace($"[{display}]: lv {level}");
                 if(level == lvMax && rare <= 5)
+                {
                     _rest.EnhanceCard(ctx, id).SubscribeWithLog(_logger, "enhance card");
+                    if(rare == 5)
+                        _logger.Warn($"[{display}]: level 100, please change card\a");
+                }
             }
         }
 

@@ -30,6 +30,7 @@ namespace HuiZ.Makai
 
             Bind<IAppCache>().To<CachingService>();
             Bind<IRequester>().To<Requester>().InThreadScope();
+            Bind<Database>().ToSelf();
         }
     }
 }
