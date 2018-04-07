@@ -67,10 +67,17 @@ namespace HuiZ.Makai.Interceptors
             return Return(modified);
         }
 
-        private object ProcessModify(Context ctx, object json) 
-            => _modifiers 
-            .Where(m => m.CanModify(ctx))
-            .Aggregate(json, (acc, m) => m.Process(ctx, acc));
+        private object ProcessModify(Context ctx, dynamic json)
+        {
+            if(json?.data?.error is var error && error != null)
+            {
+                _logger.Warn($"[skip modify]: {error?.message}, {error?.system}");
+                return json;
+            }
+            return _modifiers
+                .Where(m => m.CanModify(ctx))
+                .Aggregate((object) json, (acc, m) => m.Process(ctx, acc));
+        }
 
         private IObservable<T> Deserialize<T>(IObservable<byte[]> source)
         {
