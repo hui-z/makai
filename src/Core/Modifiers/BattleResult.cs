@@ -5,54 +5,62 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HuiZ.Makai.Game;
+using static HuiZ.Makai.Extensions;
 
 namespace HuiZ.Makai.Modifiers
 {
     public class BattleResult : IModifier
     {
-        private readonly IRequesterFactory _requesters;
+        private readonly IRequester _rest;
 
-        public BattleResult(IRequesterFactory requesters)
+        public BattleResult(IRequester rest)
         {
-            _requesters = requesters;
+            _rest = rest;
         }
 
         public bool CanModify(Context ctx) => ctx.Path == "/asg/battlej/result";
 
         public dynamic Process(Context ctx, dynamic json)
         {
-            SellEquip(ctx, json);
+            Protect(() => SellEquip(ctx, json));
+            Protect(() => EnhanceCards(ctx, json));
             return json;
+        }
+
+        private void EnhanceCards(Context ctx, dynamic json)
+        {
+            var cards = json.data.replace[0].t_member_cards;
+            foreach(var card in cards)
+            {
+                long id = card.id;
+                int level = card.lv;
+                int lvMax = card.lv_max;
+                int rare = card.rare;
+                if(level == lvMax && rare <= 5)
+                {
+                    _rest.EnhanceCard(ctx, id).SubscribeWithLog("enhance card");
+                }
+            }
         }
 
         private void SellEquip(Context ctx, dynamic json)
         {
-            try
+            var drops = json.data.extra.drop_reward_items;
+            foreach(dynamic drop in drops)
             {
-                var requester = _requesters.Get(ctx.Token);
-                var drops = json.data.extra.drop_reward_items;
-                foreach(dynamic drop in drops)
+                int itemType = drop.item_type;
+                if(itemType == 19)
                 {
-                    int itemType = drop.item_type;
-                    if(itemType == 19)
+                    long id = drop.id;
+                    var epType = new EquipType((long)drop.item_id);
+                    if (IsSell(epType))
                     {
-                        long id = drop.id;
-                        var epType = new EquipType((long)drop.item_id);
-                        if (IsSell(epType))
-                        {
-                            drops.Remove(drop);
-                            json.data.replace[0].t_member_eqs.Clear();
-                            requester.SellEquips(id).Subscribe(
-                                    result => Console.WriteLine($"[sell equip] {epType}, {result}"),
-                                    ex => Console.WriteLine($"[sell equip] {ex.Message}"));
-                        }
-                        return;
+                        drops.Remove(drop);
+                        json.data.replace[0].t_member_eqs.Clear();
+                        _rest.SellEquips(ctx, id).SubscribeWithLog("sell equip", epType.ToString());
                     }
+                    return;
                 }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex);
             }
         }
         private bool IsSell(EquipType ept)

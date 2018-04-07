@@ -16,38 +16,36 @@ namespace HuiZ.Makai
 {
     public interface IRequester
     {
-        IObservable<string> Recovery();
-        IObservable<string> SellEquips(params long[] ids);
+        IObservable<string> Recovery(Context ctx);
+        IObservable<string> SellEquips(Context ctx, params long[] ids);
+        IObservable<string> EnhanceCard(Context ctx, long id);
     }
     public class Requester : IRequester
     {
         private readonly RestClient _rest = new RestClient("https://app.makaiwars-sp.jp");
-        private readonly string _token;
 
-        public Requester(string token)
-        {
-            _token = token;
-        }
+        public IObservable<string> Recovery(Context ctx) => ApiCall(ctx, "asg/shopj/recovery", Method.GET);
 
-        public IObservable<string> Recovery()
+        public IObservable<string> SellEquips(Context ctx, params long[] ids)
         {
-            var request = new RestRequest("asg/shopj/recovery", Method.GET);
-            request.AddHeader("X-TOKEN", _token);
-            request.AddHeader("X-OS-TYPE", "2");
-            return Call<dynamic>(request).Select(r => $"error_cd: {r.error_cd}");
-        }
-
-        public IObservable<string> SellEquips(params long[] ids)
-        {
-            var request = new RestRequest("asg/eqj/sell", Method.POST);
-            request.AddHeader("X-TOKEN", _token);
-            request.AddHeader("X-OS-TYPE", "2");
             var payload = new
             {
                 t_member_eq_id = ids.Select(id => id.ToString()).ToList()
             };
-            request.AddParameter("payload", JsonConvert.SerializeObject(payload));
-            return Call<dynamic>(request).Select(r => $"{r.error_cd}");
+            return ApiCall(ctx, "asg/eqj/sell", Method.POST, payload);
+        }
+
+        public IObservable<string> EnhanceCard(Context ctx, long id)
+        {
+            var payload = new
+            {
+                t_member_card_id = id,
+                ops = new []
+                {
+                    new [] { 2, 0, 1 }
+                }
+            };
+            return ApiCall(ctx, "asg/mycardj/enh", Method.POST, payload);
         }
 
         private IObservable<T> Call<T>(RestRequest req)
@@ -68,31 +66,24 @@ namespace HuiZ.Makai
             });
             return async.AsObservable();
         }
-    }
 
-    public interface IRequesterFactory
-    {
-        IRequester Get(string token);
-    }
-    public class RequesterFactory : IRequesterFactory
-    {
-        private readonly IResolutionRoot _root;
-        private readonly IAppCache _cache;
-
-        public RequesterFactory(IResolutionRoot root, IAppCache cache)
+        private IObservable<string> ApiCall(Context ctx, string path, Method method, object payload = null)
         {
-            _root = root;
-            _cache = cache;
+            var request = new RestRequest(path, method);
+            request.AddHeader("X-TOKEN", ctx.Token);
+            request.AddHeader("X-OS-TYPE", ctx.OsType);
+            if(payload != null)
+                request.AddParameter("payload", JsonConvert.SerializeObject(payload));
+            return Call<dynamic>(request).Select(ResultInfo);
         }
 
-        public IRequester Get(string token)
+        private string ResultInfo(dynamic r)
         {
-            return _cache.GetOrAdd(token, () => Create(token));
-        }
-
-        private IRequester Create(string token)
-        {
-            return _root.Get<IRequester>(new ConstructorArgument(nameof(token), token));
+            dynamic error = r?.data?.error;
+            if (error == null)
+                return $"code: {r?.error_cd}";
+            return $"code: {r?.error_cd}, {error.message}, {error.system}";
         }
     }
+
 }

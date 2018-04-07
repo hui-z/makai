@@ -1,0 +1,27 @@
+POST https://app.makaiwars-sp.jp/asg/mycardj/enh HTTP/1.1
+X-OS-TYPE: 2
+X-TOKEN: 3ed67da285a153f8-99e1773d-4bf69b7c-9fbd185f-00a40c21bdeabdcbda84105e
+X-Unity-Version: 5.6.5f1
+X-GAME-VERSION: 00.00.00
+Accept-Encoding: gzip,deflate
+X-MST-VERSION: 20180406000000
+Content-Type: application/x-www-form-urlencoded
+X-APP-VERSION: 01.03.02
+X-RES-VERSION: 01.03.04
+User-Agent: Dalvik/1.6.0 (Linux; U; Android 4.4.4; MuMu Build/V417IR)
+Host: app.makaiwars-sp.jp
+Connection: Keep-Alive
+Content-Length: 82
+
+payload=%7B%22t_member_card_id%22%3A2468215%2C%22ops%22%3A%5B%5B2%2C0%2C1%5D%5D%7D
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sat, 07 Apr 2018 02:05:10 GMT
+Content-Type: application/json; charset=utf8
+Content-Length: 915
+Connection: keep-alive
+X-Powered-By: PHP/7.1.14
+X-Token: 3ed67da285a153f8-99e1773d-4bf69b7c-9fbd185f-00a40c21bdeabdcbda84105e
+X-Uuid: d3563e59-1ba7-40de-a57a-d015355f6915
+
+{"status_cd":0,"error_cd":0,"data":{"replace":[{"t_member_id":"783098","t_member_items":[{"item_id":"1101","item_num":3094180,"item_type":"11"},{"item_id":"2501","item_num":"1","item_type":"25"},{"item_id":"2702","item_num":"55","item_type":"27"},{"item_id":"8051","item_num":"1","item_type":"80"},{"item_id":"8052","item_num":"7","item_type":"80"},{"item_id":"8053","item_num":"0","item_type":"80"},{"item_id":"8111","item_num":"1","item_type":"81"},{"item_id":"8112","item_num":"7","item_type":"81"},{"item_id":"8113","item_num":"1","item_type":"81"},{"item_id":"8114","item_num":"0","item_type":"81"}],"t_member_cards":[{"id":"2468215","m_card_id":"6009015","rare":5,"attribute":"5","lv":"80","lv_max":100,"exp":"269687","exp_evo":0,"limit_break_num":"0","created":"2018-03-16 16:16:24","modified":"2018-04-07 11:04:44","acommands":["1","1","1"],"pcommands":["1","1","1"],"price":5}]}]},"timestamp":"1523066710"}

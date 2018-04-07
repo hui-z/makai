@@ -91,6 +91,7 @@ namespace HuiZ.Makai.Interceptors
             {
                 Url = e.WebSession.Request.Url,
                 Token = e.WebSession.Request.Headers.GetFirstHeader("X-TOKEN").Value,
+                OsType = e.WebSession.Request.Headers.GetFirstHeader("X-OS-TYPE").Value,
                 Path = new Uri(e.WebSession.Request.Url).LocalPath,
             };
         }

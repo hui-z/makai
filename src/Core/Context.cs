@@ -6,6 +6,7 @@ namespace HuiZ.Makai
     {
         public string Url { get; set; }
         public string Token { get; set; }
+        public string OsType { get; set; }
         public string Path { get; set; }
     }
 }

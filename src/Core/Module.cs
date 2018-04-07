@@ -29,8 +29,7 @@ namespace HuiZ.Makai
                 #endif
 
             Bind<IAppCache>().To<CachingService>();
-            Bind<IRequester>().To<Requester>();
-            Bind<IRequesterFactory>().To<RequesterFactory>().InSingletonScope();
+            Bind<IRequester>().To<Requester>().InThreadScope();
         }
     }
 }
