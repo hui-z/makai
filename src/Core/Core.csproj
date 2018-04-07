@@ -120,6 +120,7 @@
     <Compile Include="Interceptors\Default.cs" />
     <Compile Include="Modifiers\BattleReady.cs" />
     <Compile Include="Modifiers\BattleResult.cs" />
+    <Compile Include="Modifiers\BattleStart.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy\Server.cs" />

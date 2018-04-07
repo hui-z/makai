@@ -34,13 +34,7 @@ namespace HuiZ.Makai.Modifiers
                 }
             }
             _logger.Info($"[battle ready]: weak monster applied");
-            Protect(() => RecoveryAp(ctx));
             return json;
-        }
-
-        private void RecoveryAp(Context ctx)
-        {
-            _rest.Recovery(ctx).SubscribeWithLog(_logger, "recovery ap");
         }
     }
 }

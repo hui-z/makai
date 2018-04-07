@@ -28,6 +28,7 @@ namespace HuiZ.Makai.Modifiers
         {
             Protect(() => SellEquip(ctx, json));
             Protect(() => EnhanceCards(ctx, json));
+            json.data.replace[0].t_members.admin_flg = 1;
             return json;
         }
 
