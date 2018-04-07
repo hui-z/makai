@@ -66,7 +66,10 @@ namespace HuiZ.Makai.Modifiers
         private bool IsSell(EquipType ept)
         {
             if (ept.Category == EpCategory.Weapon && ept.Rare >= 7)
-                return false;
+            {
+                if(ept.Kind == EpKind.CriPer || ept.Kind == EpKind.CriDmg)
+                    return false;
+            }
             if (ept.Type == EpType.Shoes)
                 return false;
             if (ept.Type == EpType.Wing)
@@ -81,7 +84,7 @@ namespace HuiZ.Makai.Modifiers
                 return false;
             if (ept.Type == EpType.MasekiSpd && ept.Rare >= 6)
                 return false;
-            if (ept.Type == EpType.MasekiCriDmg && ept.Rare >= 5)
+            if (ept.Type == EpType.MasekiCriDmg && ept.Rare >= 6)
                 return false;
             if (ept.Rare >= 7)
                 return false;
