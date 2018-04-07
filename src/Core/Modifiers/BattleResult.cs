@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HuiZ.Makai.Game;
+using NLog;
 using static HuiZ.Makai.Extensions;
 
 namespace HuiZ.Makai.Modifiers
@@ -12,6 +13,7 @@ namespace HuiZ.Makai.Modifiers
     public class BattleResult : IModifier
     {
         private readonly IRequester _rest;
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public BattleResult(IRequester rest)
         {
@@ -37,9 +39,7 @@ namespace HuiZ.Makai.Modifiers
                 int lvMax = card.lv_max;
                 int rare = card.rare;
                 if(level == lvMax && rare <= 5)
-                {
-                    _rest.EnhanceCard(ctx, id).SubscribeWithLog("enhance card");
-                }
+                    _rest.EnhanceCard(ctx, id).SubscribeWithLog(_logger, "enhance card");
             }
         }
 
@@ -57,7 +57,7 @@ namespace HuiZ.Makai.Modifiers
                     {
                         drops.Remove(drop);
                         json.data.replace[0].t_member_eqs.Clear();
-                        _rest.SellEquips(ctx, id).SubscribeWithLog("sell equip", epType.ToString());
+                        _rest.SellEquips(ctx, id).SubscribeWithLog(_logger, "sell equip", epType.ToString());
                     }
                     return;
                 }

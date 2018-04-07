@@ -9,6 +9,7 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 using Titanium.Web.Proxy;
 using Titanium.Web.Proxy.EventArguments;
 using Titanium.Web.Proxy.Models;
@@ -23,6 +24,7 @@ namespace HuiZ.Makai.Proxy
     {
         private readonly ProxyServer _proxy = new ProxyServer();
         private readonly IObservable<Unit> _producer;
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public Server(int port, bool fiddler, IInterceptor interceptor)
         {
@@ -35,6 +37,7 @@ namespace HuiZ.Makai.Proxy
                     Port = 8888,
                     BypassLocalhost = true,
                 };
+                _logger.Trace("use fiddler as upstream proxy");
             }
 
             _producer = Observable.Create<Unit>(o =>
@@ -49,7 +52,7 @@ namespace HuiZ.Makai.Proxy
                 _proxy.AddEndPoint(endPoint);
                 
                 _proxy.Start();
-                _proxy.ProxyEndPoints.ForEach(ep => Console.WriteLine($"makai hack server listening on {ep.IpAddress}:{ep.Port}"));
+                _proxy.ProxyEndPoints.ForEach(ep => _logger.Info($"makai hack server listening on {ep.IpAddress}:{ep.Port}"));
                 return new CompositeDisposable(
                     Disposable.Create(() => _proxy.Stop())
                 );

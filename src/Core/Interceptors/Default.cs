@@ -7,6 +7,7 @@ using System.Reactive.Threading.Tasks;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NLog;
 using Titanium.Web.Proxy.EventArguments;
 
 namespace HuiZ.Makai.Interceptors
@@ -14,6 +15,7 @@ namespace HuiZ.Makai.Interceptors
     public class Default : IInterceptor
     {
         private readonly IEnumerable<IModifier> _modifiers;
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public Default(IEnumerable<IModifier> modifiers)
         {
@@ -33,10 +35,10 @@ namespace HuiZ.Makai.Interceptors
                 var print = e.GetRequestBody().ToObservable()
                     .Select(Encoding.UTF8.GetString)
                     .Select(Uri.UnescapeDataString)
-                    .Do(payload => Console.WriteLine($"[{path}]{query} {payload}"));
+                    .Do(payload => _logger.Trace($"[{path}]{query} {payload}"));
                 return Return(print);
             }
-            Console.WriteLine($"[{path}]{query}");
+            _logger.Trace($"[{path}]{query}");
             return Nothing();
         });
 

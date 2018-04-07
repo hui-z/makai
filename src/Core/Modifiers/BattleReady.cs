@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 using static HuiZ.Makai.Extensions;
 
 namespace HuiZ.Makai.Modifiers
@@ -10,6 +11,7 @@ namespace HuiZ.Makai.Modifiers
     public class BattleReady : IModifier
     {
         private readonly IRequester _rest;
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public BattleReady(IRequester rest)
         {
@@ -31,14 +33,14 @@ namespace HuiZ.Makai.Modifiers
                     monster.spd = 1;
                 }
             }
-            Console.WriteLine($"[battle ready]: response modified");
+            _logger.Info($"[battle ready]: weak monster applied");
             Protect(() => RecoveryAp(ctx));
             return json;
         }
 
         private void RecoveryAp(Context ctx)
         {
-            _rest.Recovery(ctx).SubscribeWithLog("recovery ap");
+            _rest.Recovery(ctx).SubscribeWithLog(_logger, "recovery ap");
         }
     }
 }

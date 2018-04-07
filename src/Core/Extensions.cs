@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 
 namespace HuiZ.Makai
 {
     public static class Extensions
     {
-        public static void SubscribeWithLog(this IObservable<string> source, string name, string option = "")
+        public static void SubscribeWithLog(this IObservable<string> source, ILogger logger, string name, string option = "")
         {
-            source.Subscribe(r => Console.WriteLine($"[{name}]: {r} {option}"), 
-                ex => Console.WriteLine($"[{name}] exception: {ex.Message}"));
+            source.Subscribe(r => logger.Info($"[{name}]: {r} {option}"), 
+                ex => logger.Error(ex, $"[{name}]"));
         }
         public static void Protect(Action action)
         {
@@ -21,7 +22,8 @@ namespace HuiZ.Makai
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                var logger = LogManager.GetLogger("Protect");
+                logger.Error(ex);
             }
         }
     }
