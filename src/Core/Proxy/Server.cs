@@ -22,7 +22,7 @@ namespace HuiZ.Makai.Proxy
     }
     public class Server : IServer
     {
-        private readonly ProxyServer _proxy = new ProxyServer();
+        private readonly ProxyServer _proxy = new ProxyServer { ProxyRealm = "makai" };
         private readonly IObservable<Unit> _producer;
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
@@ -42,7 +42,7 @@ namespace HuiZ.Makai.Proxy
 
             _producer = Observable.Create<Unit>(o =>
             {
-                //_proxy.ExceptionFunc = ex => Console.WriteLine(ex.Message);
+                //_proxy.ExceptionFunc = ex => Console.WriteLine(ex);
                 _proxy.BeforeRequest += (s, e) => interceptor.ProcessRequest(e).ToTask();
                 _proxy.BeforeResponse += (s, e) => interceptor.ProcessResponse(e).ToTask();
                 _proxy.ServerCertificateValidationCallback += OnCertificateValidsation;
@@ -60,6 +60,7 @@ namespace HuiZ.Makai.Proxy
             });
 
         }
+
         private Task<bool> Authenticate(string user, string pass) => Observable.Return(Auth(user, pass)).ToTask();
 
         private bool Auth(string user, string pass)
