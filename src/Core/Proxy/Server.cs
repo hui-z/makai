@@ -50,6 +50,7 @@ namespace HuiZ.Makai.Proxy
                 _proxy.AuthenticateUserFunc += Authenticate;
 
                 var endPoint = new ExplicitProxyEndPoint(IPAddress.Any, port, true);
+                endPoint.BeforeTunnelConnectRequest += BeforeTunnelConnectRequest;
                 _proxy.AddEndPoint(endPoint);
                 
                 _proxy.Start();
@@ -59,6 +60,13 @@ namespace HuiZ.Makai.Proxy
                 );
             });
 
+        }
+
+        private Task BeforeTunnelConnectRequest(object sender, TunnelConnectSessionEventArgs e)
+        {
+            if (e.WebSession.Request.RequestUri.Host != "app.makaiwars-sp.jp")
+                e.Excluded = true;
+            return Task.FromResult(0);
         }
 
         private Task<bool> Authenticate(string user, string pass) => Observable.Return(Auth(user, pass)).ToTask();

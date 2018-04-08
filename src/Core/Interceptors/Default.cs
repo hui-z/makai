@@ -25,8 +25,6 @@ namespace HuiZ.Makai.Interceptors
         public IObservable<Unit> ProcessRequest(SessionEventArgs e) => Observable.Defer(() =>
         {
             var url = GetUrl(e);
-            if (!url.Contains("app.makaiwars-sp.jp"))
-                return Nothing();
             var uri = new Uri(url);
             var path = uri.LocalPath;
             var query = uri.Query;
@@ -48,11 +46,6 @@ namespace HuiZ.Makai.Interceptors
 
         public IObservable<Unit> ProcessResponse(SessionEventArgs e) => Observable.Defer(() =>
         {
-            var url = GetUrl(e);
-            if (!url.Contains("app.makaiwars-sp.jp"))
-                return Nothing();
-            var uri = new Uri(url);
-            var path = uri.LocalPath;
             var contentType = e.WebSession.Response.ContentType ?? "";
             if (contentType.Contains("json"))
                 return ProcessJsonResponse(GetContext(e), e);
