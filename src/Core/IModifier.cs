@@ -9,7 +9,14 @@ namespace HuiZ.Makai
 {
     public interface IModifier
     {
+        int Priority { get; }
         bool CanModify(Context ctx);
-        dynamic Process(Context ctx, dynamic json);
+        Reply Process(Context ctx, Reply reply);
+    }
+
+    public class Reply
+    {
+        public int Code { get; set; }
+        public dynamic Body { get; set; }
     }
 }

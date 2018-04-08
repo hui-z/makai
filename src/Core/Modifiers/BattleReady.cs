@@ -18,10 +18,15 @@ namespace HuiZ.Makai.Modifiers
             _rest = rest;
         }
 
+        public int Priority => 0;
+
         public bool CanModify(Context ctx) => ctx.Path == "/asg/battlej/ready";
 
-        public dynamic Process(Context ctx, dynamic json)
+        public Reply Process(Context ctx, Reply reply)
         {
+            var json = reply.Body;
+            if (json.data.error != null)
+                return reply;
             var waves = json.data.replace[0].battle.waves;
             foreach(dynamic wave in waves)
             {
@@ -34,7 +39,7 @@ namespace HuiZ.Makai.Modifiers
                 }
             }
             _logger.Info($"[battle ready]: weak monster applied");
-            return json;
+            return reply;
         }
     }
 }

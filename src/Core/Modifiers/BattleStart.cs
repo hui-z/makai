@@ -18,12 +18,17 @@ namespace HuiZ.Makai.Modifiers
             _rest = rest;
         }
 
+        public int Priority => 0;
+
         public bool CanModify(Context ctx) => ctx.Path == "/asg/battlej/start";
 
-        public dynamic Process(Context ctx, dynamic json)
+        public Reply Process(Context ctx, Reply reply)
         {
+            var json = reply.Body;
+            if (json.data.error != null)
+                return reply;
             Protect(() => RecoveryAp(ctx, json));
-            return json;
+            return reply;
         }
 
         private void RecoveryAp(Context ctx, dynamic json)

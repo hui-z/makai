@@ -22,14 +22,18 @@ namespace HuiZ.Makai.Modifiers
             _db = db;
         }
 
+        public int Priority => 0;
+
         public bool CanModify(Context ctx) => ctx.Path == "/asg/battlej/result";
 
-        public dynamic Process(Context ctx, dynamic json)
+        public Reply Process(Context ctx, Reply reply)
         {
+            var json = reply.Body;
+            if (json.data.error != null)
+                return reply;
             Protect(() => SellEquip(ctx, json));
             Protect(() => EnhanceCards(ctx, json));
-            json.data.replace[0].t_members.admin_flg = 1;
-            return json;
+            return reply;
         }
 
         private void EnhanceCards(Context ctx, dynamic json)
@@ -84,6 +88,10 @@ namespace HuiZ.Makai.Modifiers
             if (ept.Type == EpType.Armor)
                 return true;
             if (ept.Type == EpType.Gauntlet)
+                return true;
+            if (ept.Type == EpType.Muscle)
+                return true;
+            if (ept.Type == EpType.Necklace)
                 return true;
             if (ept.Type == EpType.Helmet && ept.Rare >= 6)
                 return false;

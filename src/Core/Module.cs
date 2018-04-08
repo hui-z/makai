@@ -28,7 +28,7 @@ namespace HuiZ.Makai
                 .WithConstructorArgument("port", 9999);
                 #endif
 
-            Bind<IAppCache>().To<CachingService>();
+            Bind<IAppCache>().To<CachingService>().InSingletonScope();
             Bind<IRequester>().To<Requester>().InThreadScope();
             Bind<Database>().ToSelf();
         }

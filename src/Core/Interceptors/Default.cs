@@ -49,7 +49,7 @@ namespace HuiZ.Makai.Interceptors
                 return Nothing();
             var uri = new Uri(url);
             var path = uri.LocalPath;
-            var contentType = e.WebSession.Response.ContentType;
+            var contentType = e.WebSession.Response.ContentType ?? "";
             if (contentType.Contains("json"))
                 return ProcessJsonResponse(GetContext(e), e);
             return Nothing();
@@ -57,26 +57,32 @@ namespace HuiZ.Makai.Interceptors
 
         private IObservable<Unit> ProcessJsonResponse(Context ctx, SessionEventArgs e)
         {
-            if (_modifiers.Where(m => m.CanModify(ctx)).IsEmpty())
+            if (GetModifiers(ctx).IsEmpty())
                 return Nothing();
             var body = e.GetResponseBody().ToObservable();
             var payload = Deserialize<dynamic>(body);
-            var modified = payload.Select(p => ProcessModify(ctx, p))
-                .Select(Serialize)
-                .Do(e.SetResponseBody);
+            var modified = payload
+                .Select(p => ProcessModify(ctx, new Reply
+                {
+                    Body = p,
+                    Code =e.WebSession.Response.StatusCode
+                }))
+                .Do(reply =>
+                {
+                    e.WebSession.Response.StatusCode = reply.Code;
+                    e.SetResponseBody(Serialize(reply.Body));
+                });
             return Return(modified);
         }
 
-        private object ProcessModify(Context ctx, dynamic json)
+        private IEnumerable<IModifier> GetModifiers(Context ctx)
+            => _modifiers.Where(m => m.CanModify(ctx));
+
+        private Reply ProcessModify(Context ctx, Reply reply)
         {
-            if(json?.data?.error is var error && error != null)
-            {
-                _logger.Warn($"[skip modify]: {error?.message}, {error?.system}");
-                return json;
-            }
-            return _modifiers
-                .Where(m => m.CanModify(ctx))
-                .Aggregate((object) json, (acc, m) => m.Process(ctx, acc));
+            return GetModifiers(ctx)
+                .OrderBy(m => m.Priority)
+                .Aggregate(reply, (acc, m) => m.Process(ctx, acc));
         }
 
         private IObservable<T> Deserialize<T>(IObservable<byte[]> source)
@@ -102,6 +108,7 @@ namespace HuiZ.Makai.Interceptors
                 Token = e.WebSession.Request.Headers.GetFirstHeader("X-TOKEN").Value,
                 OsType = e.WebSession.Request.Headers.GetFirstHeader("X-OS-TYPE").Value,
                 Path = new Uri(e.WebSession.Request.Url).LocalPath,
+                RequestBody = e.GetRequestBodyAsString().ToObservable(),
             };
         }
     }
