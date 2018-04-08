@@ -30,7 +30,7 @@ namespace HuiZ.Makai.Interceptors
             var uri = new Uri(url);
             var path = uri.LocalPath;
             var query = uri.Query;
-            if(e.WebSession.Request.ContentLength > 0)
+            if (e.WebSession.Request.ContentLength > 0)
             {
                 var print = e.GetRequestBody().ToObservable()
                     .Select(Encoding.UTF8.GetString)
@@ -40,7 +40,11 @@ namespace HuiZ.Makai.Interceptors
             }
             _logger.Trace($"[{path}]{query}");
             return Nothing();
-        });
+        }).Catch((Exception ex) =>
+        {
+            _logger.Error(ex);
+            return Nothing();
+        }); 
 
         public IObservable<Unit> ProcessResponse(SessionEventArgs e) => Observable.Defer(() =>
         {
@@ -52,6 +56,10 @@ namespace HuiZ.Makai.Interceptors
             var contentType = e.WebSession.Response.ContentType ?? "";
             if (contentType.Contains("json"))
                 return ProcessJsonResponse(GetContext(e), e);
+            return Nothing();
+        }).Catch((Exception ex) =>
+        {
+            _logger.Error(ex);
             return Nothing();
         });
 
