@@ -13,6 +13,6 @@
 #### vs2017
 * Just open and build the solution.
 #### msbuild
-* install msbuild, guild: https://stackoverflow.com/questions/42696948
+* install msbuild, guide: https://stackoverflow.com/questions/42696948
 * cd <solution-dir>
 * Release.bat
