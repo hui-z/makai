@@ -38,9 +38,9 @@ namespace HuiZ.Makai.Modifiers
                     monster.def = 1;
                     monster.hp = 1;
                     monster.spd = 1;
-                    _logger.Info($"[battle ready]: weak monster <{monster.id}> applied");
                 }
             }
+            _logger.Info($"[battle ready]: weak monster applied");
             return reply;
         }
     }
