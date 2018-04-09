@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Force.DeepCloner;
 using NLog;
 using static HuiZ.Makai.Extensions;
 
@@ -24,21 +25,22 @@ namespace HuiZ.Makai.Modifiers
 
         public Reply Process(Context ctx, Reply reply)
         {
+            reply = reply.DeepClone();
             var json = reply.Body;
             if (json.data.error != null)
                 return reply;
             var waves = json.data.replace[0].battle.waves;
-            foreach(dynamic wave in waves)
+            foreach(var wave in waves)
             {
-                foreach(dynamic monster in wave.monsters)
+                foreach(var monster in wave.monsters)
                 {
                     monster.atk = 1;
                     monster.def = 1;
                     monster.hp = 1;
                     monster.spd = 1;
+                    _logger.Info($"[battle ready]: weak monster <{monster.id}> applied");
                 }
             }
-            _logger.Info($"[battle ready]: weak monster applied");
             return reply;
         }
     }
