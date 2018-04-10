@@ -64,7 +64,8 @@ namespace HuiZ.Makai.Proxy
 
         private Task BeforeTunnelConnectRequest(object sender, TunnelConnectSessionEventArgs e)
         {
-            if (e.WebSession.Request.RequestUri.Host != "app.makaiwars-sp.jp")
+            if (e.WebSession.Request.RequestUri.Host != "app.makaiwars-sp.jp" || 
+                e.WebSession.Request.RequestUri.Host != "210.140.214.150")
                 e.Excluded = true;
             return Task.FromResult(0);
         }
