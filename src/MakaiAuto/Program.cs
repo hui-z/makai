@@ -19,7 +19,9 @@ namespace HuiZ.Makai
         static void Run(Options opt)
         {
             var kernel = new StandardKernel(new Module());
-            var server = kernel.Get<Proxy.IServer>(new ConstructorArgument("fiddler", opt.Fiddler));
+            var f = new ConstructorArgument("fiddler", opt.Fiddler);
+            var a = new ConstructorArgument("authentication", opt.Authentication);
+            var server = kernel.Get<Proxy.IServer>(f, a);
             server.Subscribe();
 
             //var factory = kernel.Get<IRequesterFactory>();

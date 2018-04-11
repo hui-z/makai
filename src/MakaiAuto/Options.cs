@@ -15,5 +15,8 @@ namespace HuiZ.Makai
         [Option('f', "fiddler", Default = false, HelpText = "upstream proxy to fiddler")]
 #endif
         public bool Fiddler { get; set; }
+
+        [Option('a', "auth", Default = false, HelpText = "set proxy authentication")]
+        public bool Authentication { get; set; }
     }
 }
