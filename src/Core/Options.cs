@@ -18,5 +18,8 @@ namespace HuiZ.Makai
 
         [Option('a', "auth", Default = false, HelpText = "set proxy authentication")]
         public bool Authentication { get; set; }
+
+        [Option('i', "item-recovery", Default = false, HelpText = "use item to recovery ap")]
+        public bool ItemRecovery { get; set; }
     }
 }

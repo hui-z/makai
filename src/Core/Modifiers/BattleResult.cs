@@ -14,12 +14,14 @@ namespace HuiZ.Makai.Modifiers
     {
         private readonly IRequester _rest;
         private readonly Database _db;
+        private readonly Options _opt;
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        public BattleResult(IRequester rest, Database db)
+        public BattleResult(IRequester rest, Database db, Options opt)
         {
             _rest = rest;
             _db = db;
+            _opt = opt;
         }
 
         public int Priority => 0;

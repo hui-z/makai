@@ -17,6 +17,7 @@ namespace HuiZ.Makai
     public interface IRequester
     {
         IObservable<string> Recovery(Context ctx);
+        IObservable<string> ItemRecovery(Context ctx);
         IObservable<string> SellEquips(Context ctx, params long[] ids);
         IObservable<string> EnhanceCard(Context ctx, long id);
     }
@@ -25,6 +26,14 @@ namespace HuiZ.Makai
         private readonly RestClient _rest = new RestClient("https://app.makaiwars-sp.jp");
 
         public IObservable<string> Recovery(Context ctx) => ApiCall(ctx, "asg/shopj/recovery", Method.GET);
+        public IObservable<string> ItemRecovery(Context ctx)
+        {
+            var payload = new
+            {
+                item_id = 6003
+            };
+            return ApiCall(ctx, "asg/memberj/itemRecovery", Method.POST, payload);
+        }
 
         public IObservable<string> SellEquips(Context ctx, params long[] ids)
         {
