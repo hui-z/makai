@@ -27,7 +27,7 @@ namespace HuiZ.Makai.Modifiers
         public Reply Process(Context ctx, Reply reply)
         {
             var json = reply.Body;
-            if (json.data.error != null)
+            if (IsError(json))
                 return reply;
             Protect(() => ProcessMember(ctx, json));
             return reply;

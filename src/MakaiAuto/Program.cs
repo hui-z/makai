@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommandLine;
+using Force.DeepCloner;
 using Ninject.Parameters;
 using NLog;
 
@@ -18,16 +19,27 @@ namespace HuiZ.Makai
         }
         static void Run(Options opt)
         {
+            var luxury = opt.DeepClone();
+            luxury.Port = 9999;
+            luxury.ItemRecovery = false;
+            var thrift = opt.DeepClone();
+            thrift.Port = 6666;
+            thrift.ItemRecovery = true;
+
+            RunByOption(luxury);
+            RunByOption(thrift);
+
+            Console.ReadLine();
+        }
+        static void RunByOption(Options opt)
+        {
+#if DEBUG
+            opt.Port--;
+#endif
             var kernel = new StandardKernel(new Module());
             kernel.Bind<Options>().ToMethod(_ => opt).InSingletonScope();
             var server = kernel.Get<Proxy.IServer>();
             server.Subscribe();
-
-            //var factory = kernel.Get<IRequesterFactory>();
-            //var requester = factory.Get("eea6ac3c3051612c-635ccf3f-46743e55-b741df28-7fc0d97832b8b9bd09a18d43");
-            //requester.SellEquips(8023654).Subscribe(Console.WriteLine);
-
-            Console.ReadLine();
         }
         static void HandleErrors(IEnumerable<Error> errs)
         {

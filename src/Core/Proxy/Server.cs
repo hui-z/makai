@@ -26,7 +26,7 @@ namespace HuiZ.Makai.Proxy
         private readonly IObservable<Unit> _producer;
         private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        public Server(int port, Options opt, IInterceptor interceptor)
+        public Server(Options opt, IInterceptor interceptor)
         {
             _proxy.CertificateManager.SaveFakeCertificates = true;
             if (opt.Fiddler)
@@ -50,7 +50,7 @@ namespace HuiZ.Makai.Proxy
                 if(opt.Authentication)
                     _proxy.AuthenticateUserFunc += Authenticate;
 
-                var endPoint = new ExplicitProxyEndPoint(IPAddress.Any, port, true);
+                var endPoint = new ExplicitProxyEndPoint(IPAddress.Any, opt.Port, true);
                 endPoint.BeforeTunnelConnectRequest += BeforeTunnelConnectRequest;
                 _proxy.AddEndPoint(endPoint);
                 

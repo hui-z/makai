@@ -27,7 +27,7 @@ namespace HuiZ.Makai.Modifiers
         {
             reply = reply.DeepClone();
             var json = reply.Body;
-            if (json.data.error != null)
+            if (IsError(json))
                 return reply;
             var waves = json.data.replace[0].battle.waves;
             foreach(var wave in waves)

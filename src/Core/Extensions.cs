@@ -14,6 +14,8 @@ namespace HuiZ.Makai
             source.Subscribe(r => logger.Info($"[{name}]: {r} {option}"), 
                 ex => logger.Error(ex, $"[{name}]"));
         }
+        public static bool IsError(dynamic json) => json.error_cd != 0 || json.data.error != null;
+
         public static void Protect(Action action)
         {
             try
