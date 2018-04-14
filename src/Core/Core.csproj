@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HuiZ.Makai</RootNamespace>
     <AssemblyName>Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -113,6 +114,12 @@
     <Reference Include="System.Xml" />
     <Reference Include="Titanium.Web.Proxy, Version=3.0.392.0, Culture=neutral, PublicKeyToken=8e41e1f1c790d7cf, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Titanium.Web.Proxy.3.0.392-beta\lib\net45\Titanium.Web.Proxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Unosquare.Labs.EmbedIO, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EmbedIO.1.13.0\lib\net46\Unosquare.Labs.EmbedIO.dll</HintPath>
+    </Reference>
+    <Reference Include="Unosquare.Swan.Lite, Version=0.26.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unosquare.Swan.Lite.0.26.0\lib\net452\Unosquare.Swan.Lite.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
