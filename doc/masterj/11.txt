@@ -1,0 +1,27 @@
+POST https://app.makaiwars-sp.jp/asg/masterj/update_diff HTTP/1.1
+X-Unity-Version: 5.6.5f1
+X-MST-VERSION: 20180212000000
+Content-Type: application/x-www-form-urlencoded
+X-APP-VERSION: 01.04.00
+X-GAME-VERSION: 00.00.00
+X-TOKEN: f511ee6074a8adb2-ca524515-480108f5-a0d4b277-da14ef383d4b8ccd9ef9ff2c
+X-OS-TYPE: 2
+X-RES-VERSION: 01.03.04
+Accept-Encoding: gzip
+User-Agent: Dalvik/2.1.0 (Linux; U; Android 6.0.1; MIX MIUI/V8.5.3.0.MAHCNED)
+Host: app.makaiwars-sp.jp
+Connection: Keep-Alive
+Content-Length: 27
+
+payload=%7B%22id%22%3A16%7D
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sat, 14 Apr 2018 17:01:04 GMT
+Content-Type: application/json; charset=utf8
+Content-Length: 3245
+Connection: keep-alive
+X-Powered-By: PHP/7.1.14
+X-Token: f511ee6074a8adb2-ca524515-480108f5-a0d4b277-da14ef383d4b8ccd9ef9ff2c
+X-Uuid: 5f3691f3-cb9b-40ee-ab2a-fe283c9b3fef
+
+{"status_cd":0,"error_cd":0,"data":{"extra":{"master":"{\"master\": [{\"id\":2401,\"pic_id\":2401,\"sort\":1,\"name\":\"青のオーブ\",\"description\":\"パッシブスキルのレベルをアップする\",\"item_category\":1,\"item_type\":24,\"value1\":0,\"view_tab\":1,\"use_flg\":0,\"version_date\":\"2018-02-19 15:00:00\",\"del_flg\":0},{\"id\":2402,\"pic_id\":2402,\"sort\":2,\"name\":\"赤のオーブ\",\"description\":\"アクティブスキルのレベルをアップする\",\"item_category\":1,\"item_type\":24,\"value1\":0,\"view_tab\":1,\"use_flg\":0,\"version_date\":\"2018-02-19 15:00:00\",\"del_flg\":0},{\"id\":7204,\"pic_id\":7204,\"sort\":0,\"name\":\"エリンギャー召喚チケット\",\"description\":\"エリンギャーが召喚できるチケット\",\"item_category\":2,\"item_type\":72,\"value1\":7204,\"view_tab\":0,\"use_flg\":0,\"version_date\":\"2018-04-06 00:00:00\",\"del_flg\":0},{\"id\":8111,\"pic_id\":8111,\"sort\":101,\"name\":\"進化剤Ｓ\",\"description\":\"キャラに使用することで進化経験値を50獲得\",\"item_category\":1,\"item_type\":81,\"value1\":50,\"view_tab\":3,\"use_flg\":0,\"version_date\":\"2018-04-06 00:00:00\",\"del_flg\":0},{\"id\":8112,\"pic_id\":8112,\"sort\":102,\"name\":\"進化剤Ｍ\",\"description\":\"キャラに使用することで進化経験値を100獲得\",\"item_category\":1,\"item_type\":81,\"value1\":100,\"view_tab\":3,\"use_flg\":0,\"version_date\":\"2018-04-06 00:00:00\",\"del_flg\":0},{\"id\":8113,\"pic_id\":8113,\"sort\":103,\"name\":\"進化剤Ｌ\",\"description\":\"キャラに使用することで進化経験値を300獲得\",\"item_category\":1,\"item_type\":81,\"value1\":300,\"view_tab\":3,\"use_flg\":0,\"version_date\":\"2018-04-06 00:00:00\",\"del_flg\":0},{\"id\":8114,\"pic_id\":8114,\"sort\":104,\"name\":\"進化剤ＬＬ\",\"description\":\"キャラに使用することで進化経験値を500獲得\",\"item_category\":1,\"item_type\":81,\"value1\":500,\"view_tab\":3,\"use_flg\":0,\"version_date\":\"2018-04-06 00:00:00\",\"del_flg\":0},{\"id\":1007015,\"pic_id\":2701,\"sort\":0,\"name\":\"悪アサギの召喚石\",\"description\":\"100個集めることで召喚が可能\",\"item_category\":1,\"item_type\":27,\"value1\":0,\"view_tab\":2,\"use_flg\":0,\"version_date\":\"2018-03-30 00:00:00\",\"del_flg\":0},{\"id\":3018014,\"pic_id\":2701,\"sort\":0,\"name\":\"事象の戦乙女スルズの召喚石\",\"description\":\"100個集めることで召喚が可能\",\"item_category\":1,\"item_type\":27,\"value1\":0,\"view_tab\":2,\"use_flg\":0,\"version_date\":\"2018-03-16 00:00:00\",\"del_flg\":0},{\"id\":5017015,\"pic_id\":2701,\"sort\":0,\"name\":\"魔将軍マジョリタの召喚石\",\"description\":\"100個集めることで召喚が可能\",\"item_category\":1,\"item_type\":27,\"value1\":0,\"view_tab\":2,\"use_flg\":0,\"version_date\":\"2018-03-16 00:00:00\",\"del_flg\":0},{\"id\":5019013,\"pic_id\":2701,\"sort\":0,\"name\":\"疾風の魔王ゼロッケンの召喚石\",\"description\":\"100個集めることで召喚が可能\",\"item_category\":1,\"item_type\":27,\"value1\":0,\"view_tab\":2,\"use_flg\":0,\"version_date\":\"2018-03-16 00:00:00\",\"del_flg\":0}]}"}},"timestamp":"1523725264"}

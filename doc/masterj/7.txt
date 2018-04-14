@@ -1,0 +1,27 @@
+POST https://app.makaiwars-sp.jp/asg/masterj/update_diff HTTP/1.1
+X-Unity-Version: 5.6.5f1
+X-MST-VERSION: 20180212000000
+Content-Type: application/x-www-form-urlencoded
+X-APP-VERSION: 01.04.00
+X-GAME-VERSION: 00.00.00
+X-TOKEN: f511ee6074a8adb2-ca524515-480108f5-a0d4b277-da14ef383d4b8ccd9ef9ff2c
+X-OS-TYPE: 2
+X-RES-VERSION: 01.03.04
+Accept-Encoding: gzip
+User-Agent: Dalvik/2.1.0 (Linux; U; Android 6.0.1; MIX MIUI/V8.5.3.0.MAHCNED)
+Host: app.makaiwars-sp.jp
+Connection: Keep-Alive
+Content-Length: 26
+
+payload=%7B%22id%22%3A9%7D
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sat, 14 Apr 2018 17:01:03 GMT
+Content-Type: application/json; charset=utf8
+Content-Length: 946
+Connection: keep-alive
+X-Powered-By: PHP/7.1.14
+X-Token: f511ee6074a8adb2-ca524515-480108f5-a0d4b277-da14ef383d4b8ccd9ef9ff2c
+X-Uuid: 5f3691f3-cb9b-40ee-ab2a-fe283c9b3fef
+
+{"status_cd":0,"error_cd":0,"data":{"extra":{"master":"{\"master\": [{\"id\":10712,\"eq_category\":1,\"eq_type\":7,\"eq_kind\":1,\"rare\":2,\"name\":\"ブロンズスタッフ\",\"rank\":1,\"pop\":0,\"hp_def\":0,\"atk_def\":75,\"def_def\":0,\"spd_def\":0,\"cri_per_def\":0,\"cri_damage_def\":0,\"hp_max\":0,\"atk_max\":250,\"def_max\":0,\"spd_max\":0,\"cri_per_max\":0,\"cri_damage_max\":0,\"move\":0,\"def_status\":\"\",\"description\":\"\",\"version_date\":\"2018-02-19 15:00:00\",\"del_flg\":0},{\"id\":45717,\"eq_category\":4,\"eq_type\":57,\"eq_kind\":1,\"rare\":7,\"name\":\"一撃の魔石\",\"rank\":1,\"pop\":0,\"hp_def\":0,\"atk_def\":0,\"def_def\":0,\"spd_def\":0,\"cri_per_def\":0,\"cri_damage_def\":0,\"hp_max\":0,\"atk_max\":0,\"def_max\":0,\"spd_max\":0,\"cri_per_max\":0,\"cri_damage_max\":0,\"move\":0,\"def_status\":\"\",\"description\":\"\",\"version_date\":\"2018-03-30 00:00:00\",\"del_flg\":0}]}"}},"timestamp":"1523725263"}
