@@ -20,8 +20,9 @@ namespace HuiZ.Makai
                 .InheritedFrom<IModifier>()
                 .BindSingleInterface()
                 .Configure(b => b.InSingletonScope()));
-            Bind<Proxy.IServer>().To<Proxy.Server>()
-                .InSingletonScope();
+            Bind<Proxy.IServer>().To<Proxy.Server>().InSingletonScope();
+            Bind<Proxy.IMonitor>().To<Proxy.Monitor>().InSingletonScope();
+            Bind<Proxy.MonitorLog>().ToSelf().InSingletonScope();
 
             Bind<IAppCache>().To<CachingService>().InSingletonScope();
             Bind<IRequester>().To<Requester>().InThreadScope();
