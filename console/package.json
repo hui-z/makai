@@ -1,0 +1,21 @@
+{
+  "name": "makai-console",
+  "version": "1.0.0",
+  "description": "makai log console",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/hui-z/makai"
+  },
+  "keywords": [
+    "makai"
+  ],
+  "author": "hulucc",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^2.1.0"
+  }
+}
