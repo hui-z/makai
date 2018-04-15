@@ -23,5 +23,7 @@ namespace HuiZ.Makai
         //[Option('i', "item-recovery", Default = false, HelpText = "use item to recovery ap")]
         public bool ItemRecovery { get; set; }
 
+        public int MonitorPort { get; set; }
+
     }
 }
