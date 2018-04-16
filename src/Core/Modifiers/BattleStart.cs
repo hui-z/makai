@@ -45,7 +45,7 @@ namespace HuiZ.Makai.Modifiers
             string name = member.name;
             int level = member.lv;
             _logger.Info($"[{name}]: lv {level}, ap {ap}");
-            if (ap < 10) RecoveryAp(ctx);
+            if (ap < 21) RecoveryAp(ctx);
         }
         private DateTime GetCurrentTokyoDateTime()
         {
