@@ -16,5 +16,12 @@ namespace HuiZ.Makai.Game
         {
             return $"{NickName} {Name}";
         }
+
+        public static Card Unknown => new Card
+        {
+            Id = -1,
+            NickName = "Unknown",
+            Name = "Unknown",
+        };
     }
 }
